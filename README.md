@@ -70,13 +70,13 @@ I would recommend using a virtual environment or dev container to run this proje
 
 ```
 url-to-markdown/
-├── app.py              # FastAPI application
-├── requirements.txt    # Python dependencies
-├── scraped_content/   # Directory for markdown files
+├── app.py              # fastAPI
+├── requirements.txt    # dependencies
+├── scraped_content/   # results
 └── static/
-    ├── index.html     # Frontend interface
-    ├── styles.css     # Styling
-    └── script.js      # Frontend logic
+    ├── index.html     # frontend
+    ├── styles.css     # styling
+    └── script.js      # logic
 ```
 
 ## Development

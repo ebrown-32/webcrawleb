@@ -7,13 +7,13 @@ async function scrapeUrl() {
     const successMessage = document.getElementById('successMessage');
     const errorMessage = document.getElementById('errorMessage');
 
-    // Validate URL
+    // check url
     if (!urlInput.value) {
         showError('Please enter a URL');
         return;
     }
 
-    // Show loading state
+    // show loading spinner
     buttonText.classList.add('hidden');
     spinner.classList.remove('hidden');
     scrapeButton.disabled = true;
@@ -36,44 +36,44 @@ async function scrapeUrl() {
             throw new Error(data.detail || 'Failed to scrape URL');
         }
 
-        // Show success message
+        // show success
         successMessage.querySelector('span').textContent = data.message;
         successMessage.classList.remove('hidden');
         errorMessage.classList.add('hidden');
         result.classList.remove('hidden');
 
-        // Render markdown content if available
+        // render markdown if we have it
         if (data.markdown_content) {
             const markdownContent = document.getElementById('markdownContent');
             const markdownRenderer = document.getElementById('markdownRenderer');
             markdownRenderer.innerHTML = marked.parse(data.markdown_content);
             markdownContent.classList.remove('hidden');
             
-            // Highlight code blocks
+            // syntax highlighting
             document.querySelectorAll('pre code').forEach((block) => {
                 hljs.highlightBlock(block);
             });
         }
 
-        // Reload file list
+        // refresh file list
         loadPreviousFiles();
 
     } catch (error) {
-        // Show error message
+        // show error
         errorMessage.querySelector('span').textContent = error.message;
         successMessage.classList.add('hidden');
         errorMessage.classList.remove('hidden');
         document.getElementById('markdownContent').classList.add('hidden');
         result.classList.remove('hidden');
     } finally {
-        // Reset button state
+        // reset button
         buttonText.classList.remove('hidden');
         spinner.classList.add('hidden');
         scrapeButton.disabled = false;
     }
 }
 
-// Handle Enter key in URL input
+// handle enter key
 document.getElementById('urlInput').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         event.preventDefault();
@@ -81,7 +81,7 @@ document.getElementById('urlInput').addEventListener('keypress', function(event)
     }
 });
 
-// Theme toggle functionality
+// theme toggle
 const themeToggle = document.getElementById('themeToggle');
 themeToggle.addEventListener('click', () => {
     const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -90,7 +90,7 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('theme', newTheme);
 });
 
-// Load previous files
+// load saved files
 async function loadPreviousFiles() {
     try {
         const response = await fetch('/api/files');
@@ -102,9 +102,8 @@ async function loadPreviousFiles() {
         files.forEach(file => {
             const card = document.createElement('div');
             card.className = 'file-card';
-            // Extract URL from filename by removing timestamp and .md
+            // clean up filename for display
             const urlPart = file.name.replace(/^\d{8}_\d{6}_/, '').replace('.md', '');
-            // Replace underscores with forward slashes
             const displayUrl = urlPart.replace(/_/g, '/');
             card.innerHTML = `
                 <h3>${displayUrl}</h3>
