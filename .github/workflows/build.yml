@@ -27,4 +27,4 @@ jobs:
       with:
         name: URL-to-Markdown-Windows
         path: dist/URL-to-Markdown.exe
-        compression-level: 9  # Maximum compression to reduce artifact size 
+        compression-level: 9

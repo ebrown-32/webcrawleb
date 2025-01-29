@@ -10,6 +10,5 @@ PyInstaller.__main__.run([
     '--onefile',
     '--windowed',
     f'--add-data={static_dir}{os.pathsep}static',
-    '--icon=static/favicon.ico',  # Optional: Add an icon
     '--clean',
 ]) 
