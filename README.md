@@ -2,6 +2,8 @@
 
 An intuitive web application that converts web pages into markdown format - perfect for AI analysis and content processing.
 
+![alt text](https://github.com/ebrown-32/webcrawleb/blob/master/scrape.png?raw=true)
+
 ## Features
 
 - 🔄 Convert any webpage to markdown format
