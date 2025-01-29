@@ -19,3 +19,6 @@ scraped_content/
 
 # Temp files
 *.tmp
+
+# Vercel
+.vercel
