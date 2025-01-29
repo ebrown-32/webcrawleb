@@ -9,20 +9,11 @@ import scrape
 import asyncio
 import logging
 import os
-import sys
 
 app = FastAPI(title="Web Scraper", version="1.0.0")
 
-def get_static_path():
-    if getattr(sys, 'frozen', False):
-        # If the application is run as a bundle
-        return os.path.join(sys._MEIPASS, 'static')
-    else:
-        # If the application is run from a Python interpreter
-        return 'static'
-
 # Serve static files
-app.mount("/static", StaticFiles(directory=get_static_path()), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Data models
 class ScrapeRequest(BaseModel):
