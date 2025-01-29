@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL to Markdown</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        // check for saved theme preference or default to 'light'
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav class="top-nav">
+            <div class="theme-toggle">
+                <button id="themeToggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24">
+                        <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24">
+                        <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <header>
+            <h1>URL to Markdown</h1>
+            <p>
+                Transform webpages into elegant markdown documents.
+                <button class="info-button" id="infoButton" aria-label="Learn more">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                    </svg>
+                </button>
+            </p>
+        </header>
+
+        <main>
+            <div class="scrape-form">
+                <div class="input-group">
+                    <input type="url" id="urlInput" placeholder="Enter URL (e.g., https://example.com)" required>
+                    <button id="scrapeButton" onclick="scrapeUrl()">
+                        <span class="button-text">Scrape</span>
+                        <div class="spinner hidden"></div>
+                    </button>
+                </div>
+            </div>
+
+            <div id="result" class="result hidden">
+                <div class="result-content">
+                    <div id="successMessage" class="success-message hidden">
+                        <svg class="check-icon" viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                        </svg>
+                        <span></span>
+                    </div>
+                    <div id="errorMessage" class="error-message hidden">
+                        <svg class="error-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        <span></span>
+                    </div>
+                </div>
+                <div id="markdownContent" class="markdown-content hidden">
+                    <h2>Scraped Content</h2>
+                    <div id="markdownRenderer"></div>
+                </div>
+            </div>
+
+            <div id="previousFiles" class="previous-files hidden">
+                <h2>Previous Scrapes</h2>
+                <div class="files-grid" id="filesGrid">
+                    <!-- files inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="attribution">
+                Built by <a href="https://elibrown.info" target="_blank" rel="noopener noreferrer">Eli Brown</a>
+                <span class="divider">|</span>
+                Powered by <a href="https://github.com/unclecode/crawl4ai" target="_blank" rel="noopener noreferrer">crawl4ai</a>
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal hidden" id="infoModal">
+        <div class="modal-content">
+            <button class="close-button" id="closeModal">&times;</button>
+            <h2>Why is this useful?</h2>
+            <p>Markdown is a good format for AI because:</p>
+            <ul>
+                <li>Preserves semantic structure while removing visual clutter</li>
+                <li>Maintains clear content hierarchy with headers and lists</li>
+                <li>Uses simple, standardized formatting that's easy to parse</li>
+            </ul>
+            <p class="modal-footer">Provide a better input for LLMs, chatbots, and AI analysis tools.</p>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html> 
