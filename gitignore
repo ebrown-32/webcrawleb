@@ -1,0 +1,17 @@
+# Build directories
+build/
+dist/
+*.spec
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.env
+
+# IDE files
+.vscode/
+.idea/
+
+# Generated content
+scraped_content/ 
