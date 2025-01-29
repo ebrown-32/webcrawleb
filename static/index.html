@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Web Scraper</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Web Scraper</h1>
+            <p>Enter a URL to scrape and convert to markdown</p>
+        </header>
+
+        <main>
+            <div class="scrape-form">
+                <div class="input-group">
+                    <input type="url" id="urlInput" placeholder="Enter URL (e.g., https://example.com)" required>
+                    <button id="scrapeButton" onclick="scrapeUrl()">
+                        <span class="button-text">Scrape</span>
+                        <div class="spinner hidden"></div>
+                    </button>
+                </div>
+            </div>
+
+            <div id="result" class="result hidden">
+                <div class="result-content">
+                    <div id="successMessage" class="success-message hidden">
+                        <svg class="check-icon" viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                        </svg>
+                        <span></span>
+                    </div>
+                    <div id="errorMessage" class="error-message hidden">
+                        <svg class="error-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        <span></span>
+                    </div>
+                </div>
+                <div id="markdownContent" class="markdown-content hidden">
+                    <h2>Scraped Content</h2>
+                    <div id="markdownRenderer"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html> 
